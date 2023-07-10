@@ -18,11 +18,12 @@ class ProjectsTableSeeder extends Seeder
     {
         for($i = 0; $i < 50; $i++) {
             Project::create([
-            'name' => $faker->word(rand(5, 15), true),
-            'client_name' => $faker->name(),
-            'date' => $faker->date(),
-            'cover_image' => 'https://picsum.photos/id/' . rand(1, 270) . '/500/400',
-            'summary' => $faker->paragraphs(rand(2, 20), true),
+            'type_id'               => rand(1, 3),
+            'name'                  => $faker->word(rand(5, 15), true),
+            'client_name'           => $faker->name(),
+            'date'                  => $faker->date(),
+            'cover_image'           => 'https://picsum.photos/id/' . rand(1, 270) . '/500/400',
+            'summary'               => $faker->paragraphs(rand(2, 20), true),
         ]);
         }
     }

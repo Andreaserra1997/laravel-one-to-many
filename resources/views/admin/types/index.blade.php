@@ -2,27 +2,19 @@
 
 @section('contents')
 
-    <h1>Projects</h1>
+    <h1>Categoria</h1>
 
-    @if (session('delete_success'))
-        @php $project = session('delete_success') @endphp
+    {{-- @if (session('delete_success'))
+        @php $type = session('delete_success') @endphp
         <div class="alert alert-danger">
-            Il project "{{ $project->name }}" è stato eliminato
-            {{-- <form
-                action="{{ route("admin.projects.restore", ['project' => $project]) }}"
-                    method="project"
-                    class="d-inline-block"
-                >
-                @csrf
-                <button class="btn btn-warning">Ripristina</button>
-            </form> --}}
+            Il type "{{ $type->name }}" è stato eliminato
         </div>
-    @endif
+    @endif --}}
 
     {{-- @if (session('restore_success'))
-        @php $project = session('restore_success') @endphp
+        @php $type = session('restore_success') @endphp
         <div class="alert alert-success">
-            Il project "{{ $project->name }}" è stato ripristinato
+            Il type "{{ $type->name }}" è stato ripristinato
         </div>
     @endif --}}
 
@@ -30,26 +22,20 @@
         <thead>
             <tr>
                 <th scope="col">ID</th>
-                <th scope="col">Nome Progetto</th>
-                <th scope="col">Nome Cliente</th>
                 <th scope="col">Categoria</th>
-                <th scope="col">Data</th>
                 <th scope="col">Actions</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($projects as $project)
+            @foreach ($types as $type)
                 <tr>
-                    <th scope="row">{{ $project->id }}</th>
-                    <td>{{ $project->name }}</td>
-                    <td>{{ $project->client_name }}</td>
-                    <td><a href="{{ route('admin.types.show', ['type' => $project->type]) }}">{{ $project->type->name }}</a></td>
-                    <td>{{ $project->date }}</td>
+                    <th scope="row">{{ $type->id }}</th>
+                    <td>{{ $type->name }}</td>
                     <td>
-                        <a class="btn btn-primary" href="{{ route('admin.projects.show', ['project' => $project]) }}">View</a>
-                        <a class="btn btn-warning" href="{{ route('admin.projects.edit', ['project' => $project]) }}">Edit</a>
+                        <a class="btn btn-primary" href="{{ route('admin.types.show', ['type' => $type]) }}">View</a>
+                        <a class="btn btn-warning" href="{{ route('admin.types.edit', ['type' => $type]) }}">Edit</a>
 
-                        <button type="button" class="btn btn-danger js-delete" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id={{ $project->id}}>
+                        <button type="button" class="btn btn-danger js-delete" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id={{ $type->id}}>
                             Delete
                         </button>
                     </td>
@@ -66,13 +52,13 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Sei sicuro di voler eliminare definitivamente il project?
+                    Sei sicuro di voler eliminare definitivamente il type?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">NO</button>
                     <form
                         action=""
-                        data-template="{{ route('admin.projects.destroy', ['project' => '*****']) }}"
+                        data-template="{{ route('admin.types.destroy', ['type' => '*****']) }}"
                         method="post"
                         class="d-inline-block"
                         id="confirm-delete"
@@ -85,7 +71,4 @@
             </div>
         </div>
     </div>
-
-    {{ $projects->links() }}
-
 @endsection

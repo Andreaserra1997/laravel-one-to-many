@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Project;
+use App\Models\Type;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
@@ -11,6 +12,7 @@ class ProjectController extends Controller
     private $validations = [
         'name'          => 'required|string|min:5|max:50',
         'client_name'   => 'required|string|min:3|max:30',
+        'type_id'       => 'required|integer|exists:types,id', 
         'date'          => 'required|date', 
         'cover_image'   => 'required|url|max:200', 
         'summary'       => 'required|string',
@@ -22,6 +24,7 @@ class ProjectController extends Controller
         'max'           => 'Il campo :attribute deve contenere almeno :max caratteri',
         'url'           => 'Il campo deve essere un url valido',
         'date'          => 'Il campo :attribute deve essere in formato yyyy/mm/dd',
+        'exists'        => 'Valore non valido',
     ]; 
     /**
      * Display a listing of the resource.
@@ -41,7 +44,8 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        return view('admin.projects.create');
+        $types = Type::all();
+        return view('admin.projects.create', compact(('types')));
     }
 
     /**
@@ -59,6 +63,7 @@ class ProjectController extends Controller
         $newProject = new Project();
         $newProject->name           = $data['name'];
         $newProject->client_name    = $data['client_name'];
+        $newProject->type_id        = $data['type_id'];
         $newProject->date           = $data['date'];
         $newProject->cover_image    = $data['cover_image'];
         $newProject->summary        = $data['summary'];
@@ -86,7 +91,9 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        return view('admin.projects.edit', compact('project'));
+        $types = Type::all();
+
+        return view('admin.projects.edit', compact('project', 'types'));
     }
 
     /**
@@ -104,6 +111,7 @@ class ProjectController extends Controller
 
         $project->name           = $data['name'];
         $project->client_name    = $data['client_name'];
+        $project->type_id        = $data['type_id'];
         $project->date           = $data['date'];
         $project->cover_image    = $data['cover_image'];
         $project->summary        = $data['summary'];
